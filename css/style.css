@@ -1,4 +1,18 @@
-/* 전체 요소 기본 글꼴 설정 (Google Fonts: Noto Sans KR) */
+/* ===================================================
+   1. 변수 정의 및 기본 리셋 (Variables & Reset)
+   =================================================== */
+:root {
+    /* 대표색 및 강조색 설정 */
+    --primary-color: #2A324B;    /* 대표색: 딥 네이비 */
+    --accent-color: #6C5CE7;     /* 강조색: 트렌디 바이올렛 */
+    --text-color: #2B2D42;       /* 기본 글자색: 딥 찰콜 */
+    --bg-color: #F8F9FA;         /* 배경색: 오프화이트 */
+    --card-bg: #FFFFFF;          /* 카드 배경색: 흰색 */
+    --border-color: #E2E8F0;      /* 테두리 색상 */
+    --header-height: 120px;      /* 고정 헤더/네비 전체 높이 (본문여백용) */
+}
+
+/* 전체 요소 기본 설정 및 글꼴 적용 */
 * {
     font-family: 'Noto Sans KR', sans-serif;
     box-sizing: border-box;
@@ -6,12 +20,316 @@
     padding: 0;
 }
 
-/* 기본 레이아웃 확인용 여백 설정 (디자인 이전 기본 여백만 제공) */
+/* body 설정 (모바일 기준) */
 body {
-    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     line-height: 1.6;
+    padding-top: var(--header-height); /* 상단 고정 영역에 내용이 가려지지 않도록 여백 추가 */
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 30px;
 }
 
-header, nav, main, section, footer {
-    margin-bottom: 20px;
+/* ===================================================
+   2. 헤더 및 네비게이션 고정 영역 (Header & Nav - Fixed)
+   =================================================== */
+/* 헤더: 상단 고정 */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 8px 16px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+header h1 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+header p {
+    font-size: 0.8rem;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 네비게이션: 헤더 바로 밑에 상단 고정 */
+nav {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    height: 45px;
+    background-color: var(--primary-color);
+    z-index: 999;
+}
+
+/* Flexbox를 활용한 네비게이션 메뉴 */
+nav ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    list-style: none;
+    padding: 0 10px;
+}
+
+nav ul li a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+nav ul li a:hover {
+    background-color: var(--accent-color);
+}
+
+/* ===================================================
+   3. 섹션 공통 스타일 (Section Common Styles)
+   =================================================== */
+main section {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* 제목 스타일 및 강조색 짧은 밑줄 */
+section h2 {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 35px;             /* 짧은 밑줄 너비 */
+    height: 3px;              /* 밑줄 두께 */
+    background-color: var(--accent-color); /* 강조색 적용 */
+    border-radius: 2px;
+}
+
+/* ===================================================
+   4. 개별 섹션 스타일 (Section Specific Styles)
+   =================================================== */
+
+/* [소개 섹션] Grid 레이아웃 및 원형 프로필 */
+#about {
+    display: grid;
+    grid-template-columns: 1fr; /* 모바일: 1열 배치 */
+    justify-items: center;
+    text-align: center;
+    gap: 12px;
+}
+
+#about h2 {
+    width: 100%;
+    text-align: left;
+}
+
+#about img {
+    border-radius: 50%;      /* 프로필 이미지 원형으로 변경 */
+    object-fit: cover;
+    border: 3px solid var(--accent-color);
+    margin: 8px 0;
+}
+
+#about p {
+    font-size: 0.95rem;
+    word-break: keep-all;
+}
+
+/* [경력 섹션] Grid 레이아웃 카드 스타일 */
+#experience article {
+    display: grid;
+    gap: 8px;
+    background-color: var(--bg-color);
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color); /* 카드 좌측 포인트 선 */
+    margin-top: 10px;
+}
+
+#experience h3 {
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+#experience p {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+#experience ul {
+    padding-left: 18px;
+    font-size: 0.9rem;
+}
+
+#experience li {
+    margin-bottom: 4px;
+}
+
+/* [역량, 교육·자격, 문의 섹션] 목록 및 본문 스타일 */
+#skills ul, #education ul {
+    padding-left: 20px;
+    font-size: 0.95rem;
+}
+
+#skills li, #education li {
+    margin-bottom: 8px;
+}
+
+#contact p {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+/* ===================================================
+   5. 푸터 영역 (Footer)
+   =================================================== */
+footer {
+    text-align: center;
+    padding: 24px 0 10px;
+    color: #888888;
+    font-size: 0.8rem;
+}
+
+
+/* ===================================================
+   6. 반응형 디자인 - 태블릿 영역 (너비 768px 이상)
+   =================================================== */
+@media (min-width: 768px) {
+    /* 고정 헤더 높이 조정 (헤더와 네비게이션을 한 줄로 통합) */
+    :root {
+        --header-height: 70px;
+    }
+
+    body {
+        padding-top: var(--header-height);
+        max-width: 1200px;
+        margin: 0 auto; /* 화면 중앙 정렬 */
+    }
+
+    /* 헤더: 사이트 이름을 왼쪽에 배치 */
+    header {
+        height: 70px;
+        width: 30%;
+        left: 0;
+        align-items: flex-start;
+        justify-content: center;
+        padding-left: 30px;
+        border-bottom: none;
+        box-shadow: none;
+    }
+
+    /* 네비게이션: 메뉴를 오른쪽에 배치 */
+    nav {
+        top: 0;
+        left: 30%;
+        width: 70%;
+        height: 70px;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 30px;
+    }
+
+    nav ul {
+        gap: 20px;
+    }
+
+    nav ul li a {
+        color: var(--primary-color);
+        font-size: 0.95rem;
+    }
+
+    nav ul li a:hover {
+        color: #FFFFFF;
+    }
+
+    /* [소개 섹션] 사진 왼쪽, 글 오른쪽 2열 배치 */
+    #about {
+        grid-template-columns: 150px 1fr;
+        align-items: center;
+        justify-items: start;
+        text-align: left;
+        gap: 20px;
+    }
+
+    #about h2 {
+        grid-column: 1 / -1; /* 제목은 전체 너비 사용 */
+    }
+
+    #about img {
+        margin: 0;
+    }
+
+    /* [역량, 교육·자격 섹션] 목록 2열 Grid 배치 */
+    #skills ul, #education ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+}
+
+/* ===================================================
+   7. 반응형 디자인 - PC 영역 (너비 1024px 이상)
+   =================================================== */
+@media (min-width: 1024px) {
+    /* [소개 섹션] 프로필 사진 확대 및 Grid 영역 확장 */
+    #about {
+        grid-template-columns: 200px 1fr;
+        gap: 30px;
+        padding: 30px;
+    }
+
+    #about img {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* 헤더 이름 및 소개 문구 크기 확대 */
+    header h1 {
+        font-size: 1.6rem;
+    }
+
+    header p {
+        font-size: 0.95rem;
+    }
+
+    /* [경력 섹션] 카드가 복수일 경우 2열 배치 레이아웃 */
+    #experience {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 16px;
+    }
+
+    #experience h2 {
+        grid-column: 1 / -1;
+    }
 }
