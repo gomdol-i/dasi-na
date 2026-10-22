@@ -253,3 +253,132 @@ footer {
 		font-size: 2.5rem;
 	}
 }
+
+
+/* 12. 휴대폰 메뉴 (3일차) */
+header {
+  display: flex;                 /* 사이트 이름과 버튼을 한 줄로 */
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+#menu-btn {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+#main-nav {
+  display: none;                 /* 휴대폰: 처음에는 메뉴 숨김 */
+  width: 100%;
+}
+#main-nav.open {
+  display: block;                /* open 표시가 붙으면 메뉴 보임 */
+}
+#main-nav ul {
+  flex-direction: column;        /* 휴대폰: 세로 메뉴 */
+  gap: 0;
+}
+#main-nav a {
+  display: block;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 태블릿·PC (768px 이상): 버튼 숨기고 메뉴 항상 보이기 */
+@media (min-width: 768px) {
+  #menu-btn {
+    display: none;
+  }
+  #main-nav {
+    display: block;
+    width: auto;
+  }
+  #main-nav ul {
+    flex-direction: row;
+    gap: 24px;
+  }
+  #main-nav a {
+    padding: 0;
+    border-top: none;
+  }
+}
+
+
+/* 13. 맨 위로 가기 버튼 (3일차) */
+#top-btn {
+  position: fixed;               /* 화면 오른쪽 아래에 고정 */
+  right: 20px;
+  bottom: 20px;
+  z-index: 20;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;            /* 원형 버튼 */
+  background-color: var(--point-color);
+  color: var(--white);
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  opacity: 0;                    /* 처음에는 숨김 */
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+#top-btn.show {                  /* show 표시가 붙으면 나타남 */
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 14. 문의 폼 (3일차) */
+#contact-form {
+  display: grid;
+  gap: 8px;
+  max-width: 600px;
+  margin: 24px auto 0;
+  text-align: left;
+}
+#contact-form label {
+  margin-top: 8px;
+  font-weight: 700;
+}
+#contact-form input,
+#contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d6d3cc;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+#contact-form input:focus,
+#contact-form textarea:focus {   /* 입력 중인 칸 강조 */
+  outline: 2px solid var(--main-color);
+  border-color: transparent;
+}
+#contact-form button {
+  margin-top: 12px;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--main-color);
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+#contact-form button:hover {
+  opacity: 0.9;
+}
+#form-msg {
+  min-height: 1.5em;
+  text-align: center;
+  font-weight: 700;
+}
+#form-msg.error {
+  color: #c0392b;                /* 오류: 빨간색 */
+}
+#form-msg.success {
+  color: var(--main-color);      /* 성공: 대표색 */
+}

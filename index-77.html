@@ -13,17 +13,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- 외부 CSS 파일 연결 -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style-77.css">
 
   <!-- 외부 JavaScript 파일 연결 (defer: 화면을 다 읽은 뒤 실행) -->
-  <script src="js/script.js" defer></script>
+  <script src="js/script-77.js" defer></script>
 </head>
 <body>
 
-  <!-- 머리 영역: 사이트 이름과 메뉴 -->
+    <!-- 머리 영역: 사이트 이름, 휴대폰 메뉴 버튼, 메뉴 -->
   <header>
     <h1>다시, 나</h1>
-    <nav>
+    <!-- 휴대폰 메뉴 버튼 (3일차 추가) -->
+    <button type="button" id="menu-btn" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+    <nav id="main-nav">
       <ul>
         <li><a href="#about">소개</a></li>
         <li><a href="#career">경력</a></li>
@@ -76,11 +78,24 @@
       </ul>
     </section>
 
-    <!-- 문의 영역: 4일차에 실제 게시판과 연결 예정 -->
+        <!-- 문의 영역: 입력 폼 (4일차에 서버와 연결 예정) -->
     <section id="contact">
       <h2>문의</h2>
-      <p>함께 일할 기회를 기다립니다. 아래 문의 게시판에 글을 남겨 주세요.</p>
-      <img src="https://placehold.co/800x300?text=Contact+Board" alt="문의 게시판 자리" width="800" height="300">
+      <p>함께 일할 기회를 기다립니다. 아래에 문의를 남겨 주세요.</p>
+      <form id="contact-form" novalidate>
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" placeholder="홍길동">
+
+        <label for="email">이메일</label>
+        <input type="email" id="email" name="email" placeholder="example@email.com">
+
+        <label for="message">문의 내용</label>
+        <textarea id="message" name="message" rows="5" placeholder="10자 이상 입력해 주세요."></textarea>
+
+        <button type="submit">문의 보내기</button>
+        <!-- 입력 확인 결과 문구가 나타나는 곳 -->
+        <p id="form-msg" aria-live="polite"></p>
+      </form>
     </section>
   </main>
 
@@ -89,5 +104,7 @@
     <p>&copy; 2026 김지은. All rights reserved.</p>
   </footer>
 
+    <!-- 맨 위로 가기 버튼 (3일차 추가) -->
+  <button type="button" id="top-btn" aria-label="맨 위로 가기">↑</button>
 </body>
 </html>
