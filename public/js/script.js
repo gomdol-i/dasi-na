@@ -58,27 +58,23 @@ topBtn.addEventListener('click', function () {
 });
 
 // =========================================
-// 4. 문의 폼 입력 확인 (3일차)
+// 4. 문의 폼 입력 확인 + 서버로 전송 (4일차 수정)
 // =========================================
 const contactForm = document.querySelector('#contact-form');
 const formMsg = document.querySelector('#form-msg');
 
-// 결과 문구를 보여주는 함수 (type: error 또는 success)
 function showMessage(text, type) {
   formMsg.textContent = text;
   formMsg.className = type;
 }
 
-// 문의 보내기 버튼을 누르면 입력값을 검사
-contactForm.addEventListener('submit', function (event) {
-  event.preventDefault();  // 페이지가 새로고침되지 않도록 막음
+// async: 서버의 대답을 기다려야 하므로 붙임
+contactForm.addEventListener('submit', async function (event) {
+  event.preventDefault();
 
-  // 입력값 가져오기 (trim: 앞뒤 공백 제거)
   const name = document.querySelector('#name').value.trim();
   const email = document.querySelector('#email').value.trim();
   const message = document.querySelector('#message').value.trim();
-
-  // 이메일 형식 검사 규칙 (글자@글자.글자)
   const emailRule = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (name === '') {
@@ -94,8 +90,23 @@ contactForm.addEventListener('submit', function (event) {
     return;
   }
 
-  // 모든 검사를 통과하면 성공 문구를 보여주고 입력칸을 비움
-  // (4일차에 이 자리에서 서버로 전송하도록 바꿀 예정)
-  showMessage('문의가 접수되었습니다. 감사합니다!', 'success');
-  contactForm.reset();
+  // 검사를 통과하면 서버로 보내기 (4일차 추가)
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      showMessage(data.message, 'success');
+      contactForm.reset();
+    } else {
+      showMessage(data.message, 'error');
+    }
+  } catch (err) {
+    // 서버가 꺼져 있거나 Live Server로 열었을 때
+    showMessage('서버에 연결할 수 없습니다. npm start로 서버를 실행해 주세요.', 'error');
+  }
 });
